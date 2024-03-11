@@ -1,22 +1,30 @@
 [package]
-name = "jikyuu"
-description = "Estimate the amount of time you've spent working on a Git repository"
-version = "0.1.1"
-edition = "2018"
-authors = ["Ruin0x11 <nonbirithm@fastmail.com>"]
-license = "MIT"
-readme = "README.md"
-homepage = "https://github.com/Ruin0x11/jikyuu"
-repository = "https://github.com/Ruin0x11/jikyuu"
-keywords = ["cli", "utility", "git"]
-categories = ["command-line-utilities"]
+name               = "jikyuu"
+description        = "Estimate the amount of time you've spent working on a Git repository"
+version            = "0.2.0"
+edition            = "2018"
+authors            = ["Ruin0x11 <nonbirithm@fastmail.com>", "Nate-Wilkins <nate-wilkins@code-null.com"]
+license            = "MIT"
+readme             = "README.md"
+homepage           = "https://github.com/Ruin0x11/jikyuu"
+repository         = "https://github.com/Ruin0x11/jikyuu"
+keywords           = ["cli", "utility", "git"]
+categories         = ["command-line-utilities"]
 
 [dependencies]
-git2 = "0.13.17"
-chrono = "0.4.19"
-clap = "2.33.3"
-anyhow = "1.0.38"
-regex = "1.4.5"
-prettytable-rs = "0.8.0"
-serde_json = "1.0.64"
-serde = { version = "1.0.124", features = ["derive"] }
+git2               = "0.18.2"
+chrono             = "0.4.19"
+clap               = "2.33.3"
+anyhow             = "1.0.38"
+regex              = "1.4.5"
+prettytable-rs     = "0.10.0"
+serde_json         = "1.0.64"
+serde              = { version                                                              = "1.0.124", features = ["derive"] }
+log                = "0.4.17"
+env_logger         = "0.11.2"
+
+[dev-dependencies]
+assert_cmd         = "0.10"
+predicates         = "1"
+pretty_assertions  = "1.3.0"
+tempfile           = "3.3.0"

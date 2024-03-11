@@ -14,7 +14,7 @@ cargo install jikyuu
 
 ## Example
 
-``` sh
+```sh
 git clone https://github.com/twbs/bootstrap
 cd bootstrap
 jikyuu
@@ -38,7 +38,7 @@ jikyuu
 
 You can associate an author that has used multiple emails in the commit logs with the `--email` (`-e`) option.
 
-``` sh
+```sh
 jikyuu -e markotto@twitter.com=markdotto@gmail.com \
        -e otto@github.com=markdotto@gmail.com \
        -e markd.otto@gmail.com=markdotto@gmail.com \
@@ -63,27 +63,27 @@ Use `--format json` (`-f`) to output the data as a JSON array.
 
 ```json5
 [
-  {
-    "email": "markdotto@gmail.com",
-    "author_name": "Mark Otto",
-    "hours": 4662.817,
-    "commit_count": 6880
-  },
-  {
-    "email": "xhmikosr@gmail.com",
-    "author_name": "XhmikosR",
-    "hours": 1612.4667,
-    "commit_count": 1431
-  },
+    {
+        email: "markdotto@gmail.com",
+        author_name: "Mark Otto",
+        hours: 4662.817,
+        commit_count: 6880,
+    },
+    {
+        email: "xhmikosr@gmail.com",
+        author_name: "XhmikosR",
+        hours: 1612.4667,
+        commit_count: 1431,
+    },
 
-  // ...
+    // ...
 
-  {
-    "email": null,
-    "author_name": "Total",
-    "hours": 14826.803,
-    "commit_count": 16639
-  }
+    {
+        email: null,
+        author_name: "Total",
+        hours: 14826.803,
+        commit_count: 16639,
+    },
 ]
 ```
 
@@ -143,3 +143,7 @@ ARGS:
 ## License
 
 MIT.
+
+## External Resources
+
+-   [git2-rs](https://github.com/rust-lang/git2-rs)

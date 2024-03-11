@@ -8,36 +8,44 @@
 
     flake-utils.url                                 = "github:numtide/flake-utils";
 
-    cargo2nix.url                                   = "github:cargo2nix/cargo2nix/release-0.11.0";
+    task-runner.url                                 = "git+ssh://git@gitlab.com/ox_os/package_task_runner";
+
+    fenix.url                                       = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows                    = "nixpkgs";
   };
 
   outputs                                           = {
     nixpkgs,
     flake-utils,
-    cargo2nix,
+    task-runner,
+    fenix,
     ...
-  }:
+  }@inputs:
     let
       systems                                       = [ "x86_64-linux" ];
+      mkPkgs                                        =
+        system:
+          pkgs: (
+            # NixPkgs
+            import pkgs { inherit system; }
+            //
+            # Custom Packages.
+            { }
+          );
+
     in (
       flake-utils.lib.eachSystem systems (system: (
         let
-          pkgs                                      = import nixpkgs {
-            inherit system;
-            overlays                                = [cargo2nix.overlays.default];
-          };
-          pkgsRust                                  = pkgs.rustBuilder.makePackageSet {
-            rustVersion                             = "1.75.0";
-            packageFun                              = import ./Cargo.nix;
-            workspaceSrc                            = ./.;
-          };
+          pkgs                                      = mkPkgs system nixpkgs;
           manifest                                  = (pkgs.lib.importTOML ./Cargo.toml).package;
           environment                               = {
-            inherit system pkgs pkgsRust manifest;
+            inherit pkgs;
+            inherit manifest;
+            toolchain                               = fenix.packages.${system}.minimal.toolchain;
           };
           name                                      = manifest.name;
         in rec {
-          packages.${name}                          = (pkgsRust.workspace.${name} {});
+          packages.${name}                          = pkgs.callPackage ./default.nix environment;
           legacyPackages                            = packages;
 
           # `nix build`
@@ -51,11 +59,12 @@
           defaultApp                                = apps.${name};
 
           # `nix develop`
-          devShells.${system}.default               = import ./shell.nix environment;
+          devShells.default                         = import ./shell/default.nix {
+            inherit mkPkgs system environment;
+            flake-inputs                            = inputs;
+          };
         }
       )
     )
   );
 }
-
-
