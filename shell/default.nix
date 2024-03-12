@@ -17,6 +17,7 @@
         ${coreutils}/bin/echo "Usage                                                                "
         ${coreutils}/bin/echo "   clean                  Run cleanup on temporary files.            "
         ${coreutils}/bin/echo "   build                  Run build for the project.                 "
+        ${coreutils}/bin/echo "   test                   Run test for the project.                  "
         ${coreutils}/bin/echo "   show                   Run show info for the flake.               "
         ${coreutils}/bin/echo "   run                    Run the project.                           "
         ${coreutils}/bin/echo "   help                   Run help.                                  "
@@ -45,7 +46,7 @@
     };
 
     #
-    # Run build procedure for specific build.
+    # Run build for the project.
     #
     task_build                                                = taskRunner.mkTask {
       name                                                    = "build";
@@ -66,7 +67,7 @@
     };
 
     #
-    # Run test procedure.
+    # Run test for the project.
     #
     task_test                                                = taskRunner.mkTask {
       name                                                    = "test";
