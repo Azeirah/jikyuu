@@ -1,20 +1,29 @@
 # jikyuu (時給)
 
-A tool to estimate the amount of time spent working on a Git repository.
+> A tool to estimate the amount of time spent working on a Git repository.
 
-It is a direct port of [git-hours](https://github.com/kimmobrunfeldt/git-hours), written in Node.js, because the code was many years out of date and no longer builds.
+Original code was written in NodeJS called [git-hours](https://github.com/kimmobrunfeldt/git-hours).
+This is a port of that code but written in Rust with some quality of life improvements.
 
-Note that the information provided is only a rough estimate.
+**NOTE:** Statistics gathered is only a rough estimate.
 
 ## Installation
 
-```sh
+### Nix
+
+```bash
+nix run github:Nate-Wilkins/jikyuu -- --help
+```
+
+### Cargo
+
+```bash
 cargo install jikyuu
 ```
 
 ## Example
 
-```sh
+```bash
 git clone https://github.com/twbs/bootstrap
 cd bootstrap
 jikyuu
@@ -38,7 +47,7 @@ jikyuu
 
 You can associate an author that has used multiple emails in the commit logs with the `--email` (`-e`) option.
 
-```sh
+```bash
 jikyuu -e markotto@twitter.com=markdotto@gmail.com \
        -e otto@github.com=markdotto@gmail.com \
        -e markd.otto@gmail.com=markdotto@gmail.com \
@@ -61,83 +70,79 @@ jikyuu -e markotto@twitter.com=markdotto@gmail.com \
 
 Use `--format json` (`-f`) to output the data as a JSON array.
 
-```json5
+```json
 [
-    {
-        email: "markdotto@gmail.com",
-        author_name: "Mark Otto",
-        hours: 4662.817,
-        commit_count: 6880,
-    },
-    {
-        email: "xhmikosr@gmail.com",
-        author_name: "XhmikosR",
-        hours: 1612.4667,
-        commit_count: 1431,
-    },
+  {
+    "email": "markdotto@gmail.com",
+    "author_name": "Mark Otto",
+    "hours": 4662.817,
+    "commit_count": 6880
+  },
+  {
+    "email": "xhmikosr@gmail.com",
+    "author_name": "XhmikosR",
+    "hours": 1612.4667,
+    "commit_count": 1431
+  },
 
-    // ...
+  // ...
 
-    {
-        email: null,
-        author_name: "Total",
-        hours: 14826.803,
-        commit_count: 16639,
-    },
+  {
+    "email": null,
+    "author_name": "Total",
+    "hours": 14826.803,
+    "commit_count": 16639
+  }
 ]
 ```
 
 ## Algorithm
 
-See the [How it works](https://github.com/kimmobrunfeldt/git-hours#how-it-works) section of the git-hours README.
+The algorithm for estimating hours is quite simple. For each author in the commit history, do the following:
 
-## Usage
+<br><br>
 
-Run the following command to estimate the time spent for the provided Git repository.
+![](docs/step0.png)
 
-```sh
-jikyuu /path/to/git/repo/
+_Go through all commits and compare the difference between
+them in time._
+
+<br><br><br>
+
+![](docs/step1.png)
+
+_If the difference is smaller or equal then a given threshold, group the commits
+to a same coding session._
+
+<br><br><br>
+
+![](docs/step2.png)
+
+_If the difference is bigger than a given threshold, the coding session is finished._
+
+<br><br><br>
+
+![](docs/step3.png)
+
+_To compensate the first commit whose work is unknown, we add extra hours to the coding session._
+
+<br><br><br>
+
+![](docs/step4.png)
+
+_Continue until we have determined all coding sessions and sum the hours
+made by individual authors._
+
+<br>
+
+## Development
+
+Clone and source `.envrc.sh`.
+
 ```
-
-The path must point to the root of the Git repo, not any subdirectories inside of it.
-
-Extended usage:
-
-```
-USAGE:
-    jikyuu [FLAGS] [OPTIONS] <REPO_PATH>
-
-FLAGS:
-    -h, --help              Prints help information
-    -m, --merge-requests    Include merge requests into calculation
-    -V, --version           Prints version information
-
-OPTIONS:
-    -b, --branch <branch>                                                Analyze only data on the specified branch
-    -t, --branch-type <local|remote>
-            Type of branch that `branch` refers to. `local` means refs/heads/, `remote` means refs/remotes/.
-
-    -e, --email <OTHER_EMAIL=MAIN_EMAIL>...
-            Associate all commits that have a secondary email with a primary email
-
-    -a, --first-commit-add <MINUTES>
-            How many minutes first commit of session should add to total [default: 120]
-
-    -f, --format <format>
-             [default: stdout]  [possible values: Stdout, Json]
-
-    -d, --max-commit-diff <MINUTES>
-            Maximum difference in minutes between commits counted to one session [default: 120]
-
-    -s, --since <always|today|yesterday|thisweek|lastweek|YYYY-mm-dd>
-            Analyze data since certain date [default: always]
-
-    -u, --until <always|today|yesterday|thisweek|lastweek|YYYY-mm-dd>
-            Analyze data until certain date [default: always]
-
-
-ARGS:
-    <REPO_PATH>    Root path of the Git repository to analyze.
+git clone git@gitlab.com:nate-wilkins/eve.git
+source .envrc.sh && develop
+run --help
 ```
 
 ## License
@@ -146,4 +151,5 @@ MIT.
 
 ## External Resources
 
--   [git2-rs](https://github.com/rust-lang/git2-rs)
+- [git-hours](https://github.com/kimmobrunfeldt/git-hours)
+- [git2-rs](https://github.com/rust-lang/git2-rs)
