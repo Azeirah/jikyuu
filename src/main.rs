@@ -6,6 +6,7 @@ use anyhow::{bail, Result};
 use command::statistics::statistics;
 use command::statistics_configuration::OutputFormat;
 use log::{LevelFilter, Record};
+use std::env;
 use std::io::Write;
 use std::str::FromStr;
 
@@ -17,19 +18,26 @@ type LogFormatter = Box<
 
 fn main() {
     // Command line interface.
-    let args = create_application().get_matches();
+    let mut application = create_application();
+    let mut exit_code: ExitCode = 0;
+    if env::args().count() <= 1 {
+        application.print_long_help().unwrap();
+        println!();
+    } else {
+        let args = application.get_matches();
 
-    // Initialize logger.
-    initialize_logger(&args);
+        // Initialize logger.
+        initialize_logger(&args);
 
-    // Run the application.
-    let exit_code = match run(&args) {
-        Ok(exit_code) => exit_code,
-        Err(e) => {
-            eprintln!("{}", e);
-            2
-        }
-    };
+        // Run the application.
+        exit_code = match run(&args) {
+            Ok(exit_code) => exit_code,
+            Err(e) => {
+                eprintln!("{}", e);
+                2
+            }
+        };
+    }
     std::process::exit(exit_code);
 }
 
@@ -42,7 +50,6 @@ fn create_application() -> clap::App<'static, 'static> {
         .version(clap::crate_version!())
         .author(clap::crate_authors!())
         .about(clap::crate_description!())
-        .setting(clap::AppSettings::ArgRequiredElseHelp)
         .arg(
             clap::Arg::with_name("verbosity")
                 .long("verbosity")
@@ -239,6 +246,8 @@ fn run(args: &clap::ArgMatches) -> Result<ExitCode> {
         exit_code = completions(args)?;
     } else if args.subcommand_matches("stats").is_some() {
         exit_code = statistics(args)?;
+    } else {
+        create_application().print_long_help()?;
     }
 
     Ok(exit_code)
