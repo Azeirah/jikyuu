@@ -66,6 +66,21 @@
     };
 
     #
+    # Run test procedure.
+    #
+    task_test                                                = taskRunner.mkTask {
+      name                                                    = "test";
+      dependencies                                            = with pkgs; [
+        environment.toolchain     # /bin/cargo
+        pkg-config
+        openssl
+      ];
+      src                                                     = ''
+        ${environment.toolchain}/bin/cargo test
+      '';
+    };
+
+    #
     # Run show info for the flake.
     #
     task_show                                                 = taskRunner.mkTask {
@@ -117,6 +132,7 @@
         help                                             = task_help;
         clean                                            = task_clean;
         build                                            = task_build;
+        test                                             = task_test;
         show                                             = task_show;
         run                                              = task_run;
       };

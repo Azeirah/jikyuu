@@ -1,34 +1,16 @@
 #!/bin/bash
 
+# Dependencies:
+# - bash
+# - nix
+
 function develop() {
+  # Start Development Environment.
   nix develop \
-    --experimental-features 'nix-command flakes' \
-    --ignore-environment
-    "."
-}
-
-function build() {
-  nix build  \
     --experimental-features 'nix-command flakes' \
     --show-trace \
     --verbose \
-    --option eval-cache false \
-    -L \
+    --ignore-environment \
     "."
 }
 
-function test() {
-  nix develop \
-    --experimental-features 'nix-command flakes' \
-    . -c bash -c "cargo test"
-}
-
-function run() {
-  nix run  \
-    --experimental-features 'nix-command flakes' \
-    --show-trace \
-    --verbose \
-    --option eval-cache false \
-    -L \
-    "." -- $@
-}
