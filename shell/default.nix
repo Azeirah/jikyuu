@@ -74,6 +74,7 @@
         environment.toolchain     # /bin/cargo
         pkg-config
         openssl
+gcc
       ];
       src                                                     = ''
         ${environment.toolchain}/bin/cargo test
