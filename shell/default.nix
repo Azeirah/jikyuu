@@ -16,6 +16,7 @@
         ${coreutils}/bin/echo "                                                                     "
         ${coreutils}/bin/echo "Usage                                                                "
         ${coreutils}/bin/echo "   clean                  Run cleanup on temporary files.            "
+        ${coreutils}/bin/echo "   docs                   Run documentation generator.               "
         ${coreutils}/bin/echo "   build                  Run build for the project.                 "
         ${coreutils}/bin/echo "   test                   Run test for the project.                  "
         ${coreutils}/bin/echo "   show                   Run show info for the flake.               "
@@ -42,6 +43,22 @@
 
         # Delete all empty directories.
         ${findutils}/bin/find . -type d -empty -delete
+      '';
+    };
+
+    #
+    # Run documentation generator.
+    #
+    task_docs                                                = taskRunner.mkTask {
+      name                                                   = "docs";
+      dependencies                                           = with pkgs; [
+        coreutils           # /bin/echo  # /bin/cp
+        task-documentation  # /bin/alex
+      ];
+      isolate                                                = false;
+      src                                                    = with pkgs; ''
+        ${task-documentation}/bin/alex generate
+        ${coreutils}/bin/cp ./docs/README.md ./README.md
       '';
     };
 
@@ -133,6 +150,7 @@
       tasks                                              = {
         help                                             = task_help;
         clean                                            = task_clean;
+        docs                                             = task_docs;
         build                                            = task_build;
         test                                             = task_test;
         show                                             = task_show;
