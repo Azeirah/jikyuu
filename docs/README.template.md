@@ -140,7 +140,7 @@ made by individual authors._
 Clone and source `.envrc.sh`.
 
 ```
-git clone git@gitlab.com:nate-wilkins/eve.git
+git clone git@gitlab.com:nate-wilkins/jikyuu.git
 source .envrc.sh && develop
 run --help
 ```

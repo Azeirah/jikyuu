@@ -151,7 +151,7 @@ made by individual authors._
 Clone and source `.envrc.sh`.
 
 ```
-git clone git@gitlab.com:nate-wilkins/eve.git
+git clone git@gitlab.com:nate-wilkins/jikyuu.git
 source .envrc.sh && develop
 run --help
 ```
@@ -164,7 +164,7 @@ MIT.
 
 | Author  | Estimated Hours |
 | ------------- | ------------- |
-| [![nate-wilkins](https://github.com/nate-wilkins.png?size=64)](https://github.com/nate-wilkins) | <p align="right">2.18 Hours</p> |
+| [![nate-wilkins](https://github.com/nate-wilkins.png?size=64)](https://github.com/nate-wilkins) | <p align="right">2.57 Hours</p> |
 | [![Ruin0x11](https://github.com/Ruin0x11.png?size=64)](https://github.com/Ruin0x11) | <p align="right">1.95 Hours</p> |
 
 ## External Resources
