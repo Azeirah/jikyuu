@@ -74,7 +74,7 @@
         environment.toolchain     # /bin/cargo
         pkg-config
         openssl
-gcc
+        gcc                       # TODO: We shouldn't need a direct reference to this?
       ];
       src                                                     = ''
         ${environment.toolchain}/bin/cargo test
