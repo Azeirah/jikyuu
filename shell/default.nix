@@ -105,14 +105,35 @@
     task_show                                                 = taskRunner.mkTask {
       name                                                    = "show";
       dependencies                                            = with pkgs; [
+        task_build          # /bin/run
         coreutils           # /bin/echo
-        findutils           # /bin/find
-        nix                 # /bin/nix
+        nix                 # /bin/nix  /bin/nix-store
           git               # /bin/git
+        jq                  # /bin/jq
+        graphviz            # /bin/graphviz
       ];
+      isolate                                                 = false;
       src                                                     = with pkgs; ''
+        # Build
+        ${task_build}/bin/build
+
+        # Flake
         ${nix}/bin/nix flake show \
           --experimental-features 'nix-command flakes'
+
+        # Outputs
+        ${nix}/bin/nix derivation show | ${jq}/bin/jq '.[].outputs'
+
+        # Store
+        TASK_SHOW_NIX_STORE_PATH=$(${nix}/bin/nix eval --inputs-from . --raw)
+        ${coreutils}/bin/echo "$TASK_SHOW_NIX_STORE_PATH"
+        ${coreutils}/bin/echo ""
+
+        # Dependencies
+        ${nix}/bin/nix-store --query --tree       "$TASK_SHOW_NIX_STORE_PATH" | ${coreutils}/bin/cat
+        ${coreutils}/bin/echo ""
+        ${nix}/bin/nix-store --query --references "$TASK_SHOW_NIX_STORE_PATH" | ${coreutils}/bin/cat
+        ${nix}/bin/nix-store --query --graph      "$TASK_SHOW_NIX_STORE_PATH" | ${graphviz}/bin/dot -Tpng -o result-dependencies.png 2> /dev/null
       '';
     };
 
