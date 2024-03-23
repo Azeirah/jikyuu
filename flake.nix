@@ -8,8 +8,8 @@
 
     flake-utils.url                                 = "github:numtide/flake-utils";
 
-    task-runner.url                                 = "git+ssh://git@gitlab.com/ox_os/package_task_runner";
-    task-documentation.url                          = "git+ssh://git@gitlab.com/ox_os/package_task_documentation";
+    task-runner.url                                 = "gitlab:ox_os/task-runner";
+    task-documentation.url                          = "gitlab:ox_os/task-documentation";
 
     fenix.url                                       = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows                    = "nixpkgs";
