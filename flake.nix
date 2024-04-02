@@ -3,7 +3,9 @@
 
   inputs                                            = {
     nixpkgs.url                                     = "github:NixOS/nixpkgs/23.11";
-    systems.url                                     = "github:nix-systems/default";
+
+    systems.url                                     = "path:./flake.systems.nix";
+    systems.flake                                   = false;
 
     flake-utils.url                                 = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows              = "systems";
@@ -24,7 +26,6 @@
     ...
   }@inputs:
     let
-      systems                                       = [ "x86_64-linux" ];
       mkPkgs                                        =
         system:
           pkgs: (
@@ -38,7 +39,7 @@
           );
 
     in (
-      flake-utils.lib.eachSystem systems (system: (
+      flake-utils.lib.eachDefaultSystem (system: (
         let
           pkgs                                      = mkPkgs system nixpkgs;
           manifest                                  = (pkgs.lib.importTOML ./Cargo.toml).package;
