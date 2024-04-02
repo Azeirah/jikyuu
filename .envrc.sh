@@ -10,6 +10,8 @@ function develop() {
     --experimental-features 'nix-command flakes' \
     --show-trace \
     --verbose \
+    --option max-jobs 8 \
+    --option cores 2 \
     --ignore-environment \
     "."
 }

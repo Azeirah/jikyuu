@@ -1,9 +1,5 @@
-{ mkPkgs, flake-inputs, system, environment, ... }: (
+{ pkgs, taskRunner, toolchain, ... }: (
   let
-    pkgs                                                        = mkPkgs system flake-inputs.nixpkgs;
-    taskRunner                                                  =
-      flake-inputs.task-runner.taskRunner.${system};
-
     #
     # Run help.
     #
@@ -89,13 +85,13 @@
     task_test                                                = taskRunner.mkTask {
       name                                                    = "test";
       dependencies                                            = with pkgs; [
-        environment.toolchain     # /bin/cargo
+        toolchain           # /bin/cargo
         pkg-config
         openssl
         gcc                       # TODO: We shouldn't need a direct reference to this?
       ];
       src                                                     = ''
-        ${environment.toolchain}/bin/cargo test
+        ${toolchain}/bin/cargo test
       '';
     };
 
@@ -161,7 +157,7 @@
   in (
     taskRunner.mkTaskRunner {
       dependencies                                       = with pkgs; [
-        environment.toolchain
+        toolchain
         pkg-config
         openssl
       ];

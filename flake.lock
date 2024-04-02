@@ -1,5 +1,32 @@
 {
   "nodes": {
+    "asciinema-automation": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1712042312,
+        "narHash": "sha256-1qpWprz04Zmn29ambQuw9dgzxxgX044YOec0Q5JIVxM=",
+        "owner": "Nate-Wilkins",
+        "repo": "asciinema-automation",
+        "rev": "edcd2877306a3db873d9192b9dbb5117ebc7dc0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Nate-Wilkins",
+        "ref": "1.0.1",
+        "repo": "asciinema-automation",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -41,6 +68,56 @@
         "type": "github"
       }
     },
+    "gitignore": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "jikyuu": {
+      "inputs": {
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1712042482,
+        "narHash": "sha256-hiydnAm6cSsHijDDif9gnd6UZY9jRIosNXjNELjf3e0=",
+        "owner": "Nate-Wilkins",
+        "repo": "jikyuu",
+        "rev": "e5e0d41fc5bbefe85312f2e5692da56e6474fd1c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Nate-Wilkins",
+        "ref": "1.0.1",
+        "repo": "jikyuu",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1701282334,
@@ -59,10 +136,15 @@
     },
     "root": {
       "inputs": {
+        "asciinema-automation": "asciinema-automation",
         "fenix": "fenix",
         "flake-utils": "flake-utils",
+        "gitignore": "gitignore",
+        "jikyuu": "jikyuu",
         "nixpkgs": "nixpkgs",
-        "systems": "systems"
+        "systems": "systems",
+        "task-documentation": "task-documentation",
+        "task-runner": "task-runner"
       }
     },
     "rust-analyzer-src": {
@@ -93,6 +175,87 @@
       "original": {
         "path": "./flake.systems.nix",
         "type": "path"
+      }
+    },
+    "task-documentation": {
+      "inputs": {
+        "asciinema-automation": [
+          "asciinema-automation"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "gitignore": [
+          "gitignore"
+        ],
+        "jikyuu": [
+          "jikyuu"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1712048513,
+        "narHash": "sha256-bzcvokxgyUVl8wQXYwMucEHaoQ3Ggn1v/H3Jg4jWN6Q=",
+        "owner": "ox_os",
+        "repo": "task-documentation",
+        "rev": "6599a10dc3c7ab168e100c8b33b7252735a3b15d",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "ox_os",
+        "ref": "3.0.1",
+        "repo": "task-documentation",
+        "type": "gitlab"
+      }
+    },
+    "task-runner": {
+      "inputs": {
+        "asciinema-automation": [
+          "asciinema-automation"
+        ],
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "gitignore": [
+          "gitignore"
+        ],
+        "jikyuu": [
+          "jikyuu"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ],
+        "task-documentation": [
+          "task-documentation"
+        ]
+      },
+      "locked": {
+        "lastModified": 1712048872,
+        "narHash": "sha256-AAUN8XddIra40z1/sL4FYN5002oTCcZO6piwTuCly4k=",
+        "owner": "ox_os",
+        "repo": "task-runner",
+        "rev": "7c668f942bea8fcb2493a73c6df525f77ddf8501",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "ox_os",
+        "ref": "1.0.0",
+        "repo": "task-runner",
+        "type": "gitlab"
       }
     }
   },
