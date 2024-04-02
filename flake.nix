@@ -8,8 +8,8 @@
 
     flake-utils.url                                 = "github:numtide/flake-utils";
 
-    task-runner.url                                 = "gitlab:ox_os/task-runner";
-    task-documentation.url                          = "gitlab:ox_os/task-documentation";
+    # task-runner.url                                 = "gitlab:ox_os/task-runner";
+    # task-documentation.url                          = "gitlab:ox_os/task-documentation";
 
     fenix.url                                       = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows                    = "nixpkgs";
@@ -18,8 +18,8 @@
   outputs                                           = {
     nixpkgs,
     flake-utils,
-    task-runner,
-    task-documentation,
+    # task-runner,
+    # task-documentation,
     fenix,
     ...
   }@inputs:
@@ -33,7 +33,7 @@
             //
             # Custom Packages.
             {
-              task-documentation                    = task-documentation.defaultPackage."${system}";
+              # task-documentation                    = task-documentation.defaultPackage."${system}";
             }
           );
 
