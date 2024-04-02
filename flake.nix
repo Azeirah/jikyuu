@@ -3,10 +3,10 @@
 
   inputs                                            = {
     nixpkgs.url                                     = "github:NixOS/nixpkgs/23.11";
-
-    nixpkgs-unstable.url                            = "github:NixOS/nixpkgs/nixos-unstable";
+    systems.url                                     = "github:nix-systems/default";
 
     flake-utils.url                                 = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows              = "systems";
 
     # task-runner.url                                 = "gitlab:ox_os/task-runner";
     # task-documentation.url                          = "gitlab:ox_os/task-documentation";
