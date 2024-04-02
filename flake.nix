@@ -10,11 +10,11 @@
     flake-utils.url                                 = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows              = "systems";
 
-    # task-runner.url                                 = "gitlab:ox_os/task-runner";
-    # task-documentation.url                          = "gitlab:ox_os/task-documentation";
-
     fenix.url                                       = "github:nix-community/fenix";
     fenix.inputs.nixpkgs.follows                    = "nixpkgs";
+
+    # task-runner.url                                 = "gitlab:ox_os/task-runner";
+    # task-documentation.url                          = "gitlab:ox_os/task-documentation";
   };
 
   outputs                                           = {
